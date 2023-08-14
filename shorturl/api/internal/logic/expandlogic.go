@@ -5,6 +5,7 @@ import (
 
 	"google.com/uhziel/hello-go-zero/shorturl/api/internal/svc"
 	"google.com/uhziel/hello-go-zero/shorturl/api/internal/types"
+	"google.com/uhziel/hello-go-zero/shorturl/rpc/transfrom/transform"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -23,8 +24,15 @@ func NewExpandLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExpandLogi
 	}
 }
 
-func (l *ExpandLogic) Expand(req *types.ExpandReq) (resp *types.ExpandResp, err error) {
-	// todo: add your logic here and delete this line
+func (l *ExpandLogic) Expand(req *types.ExpandReq) (*types.ExpandResp, error) {
+	resp, err := l.svcCtx.Transform.Expand(l.ctx, &transform.ExpandReq{
+		Shorten: req.Shorten,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.ExpandResp{
+		Url: resp.Url,
+	}, nil
 }

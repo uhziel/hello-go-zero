@@ -5,6 +5,7 @@ import (
 
 	"google.com/uhziel/hello-go-zero/shorturl/api/internal/svc"
 	"google.com/uhziel/hello-go-zero/shorturl/api/internal/types"
+	"google.com/uhziel/hello-go-zero/shorturl/rpc/transfrom/transform"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +25,15 @@ func NewShortenLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ShortenLo
 }
 
 func (l *ShortenLogic) Shorten(req *types.ShortenReq) (resp *types.ShortenResp, err error) {
-	// todo: add your logic here and delete this line
+	respRpc, err := l.svcCtx.Transform.Shorten(l.ctx, &transform.ShortenReq{
+		Url: req.Url,
+	})
+	if err != nil {
+		return
+	}
 
+	resp = &types.ShortenResp{
+		Shorten: respRpc.Shorten,
+	}
 	return
 }
