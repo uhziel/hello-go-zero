@@ -4,3 +4,6 @@ Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: transform.rpc
+DataSource: root:go-zero-deps@tcp(localhost:3306)/hello-go-zero
+Cache:
+  - Host: localhost:6379
