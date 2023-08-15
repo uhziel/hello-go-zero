@@ -7,3 +7,8 @@ Etcd:
 DataSource: root:go-zero-deps@tcp(localhost:3306)/hello-go-zero
 Cache:
   - Host: localhost:6379
+Telemetry:
+  Name: transform-rpc
+  Endpoint: http://localhost:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
